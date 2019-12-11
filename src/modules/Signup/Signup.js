@@ -50,7 +50,7 @@ function Signup({ signupInputHandler, signupButtonHandler }) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
+                autoComplete="firstname"
                 name="firstname"
                 onChange={signupInputHandler}
                 variant="outlined"
@@ -70,7 +70,7 @@ function Signup({ signupInputHandler, signupButtonHandler }) {
                 id="lastname"
                 label="Last Name"
                 name="lastname"
-                autoComplete="lname"
+                autoComplete="lastname"
               />
             </Grid>
             <Grid item xs={12}>
@@ -79,10 +79,10 @@ function Signup({ signupInputHandler, signupButtonHandler }) {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username / Email"
+                name="username"
+                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>
@@ -95,7 +95,7 @@ function Signup({ signupInputHandler, signupButtonHandler }) {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                autoComplete="password"
               />
             </Grid>
           </Grid>
