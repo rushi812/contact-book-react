@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter, Redirect } from 'react-router-dom';
 
 import AddContact from './AddContact';
-import { addContact } from '../../../../redux/contactActions';
+import { addContact, updateContact } from '../../../../redux/contactActions';
 import firebase from '../../../../firebase/firebase';
 
 const db = firebase.firestore();
@@ -50,7 +50,7 @@ class AddContactContainer extends Component {
   updateContactButtonHandler = (event) => {
     const { firstname, lastname, email, phone, address } = this.state;
     event.preventDefault();
-    this.props.addContact(this.state);
+    this.props.updateContact();
     db.collection('contacts').doc(this.state.id).update({
       firstname,
       lastname,
@@ -85,6 +85,7 @@ const matchStateToProps = (state) => ({
 
 const matchDispatchToProps = (dispatch) => bindActionCreators({
   addContact,
+  updateContact,
 }, dispatch);
 
 export default connect(

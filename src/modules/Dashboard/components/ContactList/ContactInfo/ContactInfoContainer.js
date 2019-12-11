@@ -3,17 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter, useHistory } from 'react-router-dom';
 
-// import firebase from '../../../../../firebase/firebase';
 import ContactInfo from './ContactInfo';
-import { UpdateContact } from '../../../../../redux/contactActions';
+import { updateContact } from '../../../../../redux/contactActions';
 
-const ContactInfoContainer = ({ contacts, isEdit, UpdateContact }) => {
-  // const db = firebase.firestore();
+const ContactInfoContainer = ({ contacts, isEdit, updateContact }) => {
   const history = useHistory();
 
   const editbuttonHandler = (event, id) => {
     event.preventDefault();
-    UpdateContact(isEdit);
+    updateContact(isEdit);
     history.push('/add-contact');
   }
 
@@ -30,7 +28,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  UpdateContact,
+  updateContact,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContactInfoContainer));

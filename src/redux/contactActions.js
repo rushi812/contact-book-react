@@ -35,7 +35,7 @@ export const getListItemData = (id) => {
   }
 }
 
-export const UpdateContact = (isEdit) => {
+export const updateContact = (isEdit) => {
   return (dispatch) => {
     dispatch({
       type: actionTypes.UPDATE_CONTACT,

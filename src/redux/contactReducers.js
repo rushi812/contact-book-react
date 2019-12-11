@@ -12,9 +12,9 @@ const contactReducer = (state = initialState, action) => {
   switch (type) {
     case actionTypes.ADD_CONTACT:
       return {
-        // ...state,
+        ...state,
         contacts: contact,
-        isEdit: !state.isEdit,
+        isEdit: false,
       }
     case actionTypes.GET_LIST_ITEM:
       return {
