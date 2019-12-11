@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   purple: {
     color: '#fff',
-    backgroundColor: deepPurple[500],
+    backgroundColor: '#3f51b5',
     padding: '1.5rem',
     marginRight: '1.3rem',
   },

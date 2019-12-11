@@ -8,6 +8,10 @@ import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+
+
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -86,7 +90,13 @@ function Login({ loginInputHandler, loginButtonHandler, validate }) {
             >Sign In
           </Button>
           </div>
-
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="/signup" variant="body2">
+                Create new account? Sign up
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div >
     </Container>

@@ -17,21 +17,28 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
     },
     menuButton: {
-        marginRight: theme.spacing(7),
+        marginRight: theme.spacing(4),
         fontSize: '2rem',
     },
     title: {
         flexGrow: 1,
+        fontSize: '1rem',
     },
     linkStyle: {
         color: '#fff',
         textDecoration: 'none',
-        marginRight: theme.spacing(3),
+        transition: 'all 0.3s',
+        padding: '1rem',
+        textTransform: 'uppercase',
+        borderRadius: '5px',
+        '&:hover': {
+            color: '#eee',
+            backgroundColor: '#7d8eee4b',
+        }
     },
     button: {
         color: '#fff',
         textDecoration: 'none',
-        // backgroundColor: '#7d8eee',
         padding: theme.spacing(1),
         borderRadius: '5px',
     },
@@ -44,7 +51,7 @@ function Navbar({ isLoggedIn, logoutButtonHandler }) {
     return (
         <div>
             <Paper >
-                <AppBar position="static" className={classes.appBar}>
+                <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" noWrap className={classes.menuButton}>
                             <Link to="/" className={classes.linkStyle}>CONTACT BOOK</Link>
