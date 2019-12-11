@@ -51,12 +51,12 @@ function Signup({ signupInputHandler, signupButtonHandler }) {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="firstname"
                 onChange={signupInputHandler}
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="firstname"
                 label="First Name"
                 autoFocus
               />
@@ -67,9 +67,9 @@ function Signup({ signupInputHandler, signupButtonHandler }) {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
+                id="lastname"
                 label="Last Name"
-                name="lastName"
+                name="lastname"
                 autoComplete="lname"
               />
             </Grid>
