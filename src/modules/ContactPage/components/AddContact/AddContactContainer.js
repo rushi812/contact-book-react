@@ -48,10 +48,10 @@ class AddContactContainer extends Component {
   }
 
   updateContactButtonHandler = (event) => {
-    const { firstname, lastname, email, phone, address } = this.state;
+    const { id, firstname, lastname, email, phone, address } = this.state;
     event.preventDefault();
     this.props.updateContact();
-    db.collection('contacts').doc(this.state.id).update({
+    db.collection('contacts').doc(id).update({
       firstname,
       lastname,
       email,
