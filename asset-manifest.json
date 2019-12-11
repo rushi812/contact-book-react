@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/contact-book-react/static/css/main.b87b67a2.chunk.css",
+    "main.js": "/contact-book-react/static/js/main.7bd5df84.chunk.js",
+    "main.js.map": "/contact-book-react/static/js/main.7bd5df84.chunk.js.map",
+    "runtime-main.js": "/contact-book-react/static/js/runtime-main.51fb6355.js",
+    "runtime-main.js.map": "/contact-book-react/static/js/runtime-main.51fb6355.js.map",
+    "static/js/2.fde863ad.chunk.js": "/contact-book-react/static/js/2.fde863ad.chunk.js",
+    "static/js/2.fde863ad.chunk.js.map": "/contact-book-react/static/js/2.fde863ad.chunk.js.map",
+    "index.html": "/contact-book-react/index.html",
+    "precache-manifest.a537ad02bf1281a60593a76075d4fef6.js": "/contact-book-react/precache-manifest.a537ad02bf1281a60593a76075d4fef6.js",
+    "service-worker.js": "/contact-book-react/service-worker.js",
+    "static/css/main.b87b67a2.chunk.css.map": "/contact-book-react/static/css/main.b87b67a2.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.51fb6355.js",
+    "static/js/2.fde863ad.chunk.js",
+    "static/css/main.b87b67a2.chunk.css",
+    "static/js/main.7bd5df84.chunk.js"
+  ]
+}
