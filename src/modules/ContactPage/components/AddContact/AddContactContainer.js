@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter, Redirect } from 'react-router-dom';
 
-import AddContact from './AddContact';
+import FormikAddContactApp from './AddContact';
 import { addContact, updateContact } from '../../../../redux/contactActions';
 import firebase from '../../../../firebase/firebase';
 
@@ -38,12 +38,8 @@ class AddContactContainer extends Component {
       [event.target.name]: event.target.value
     })
   }
-  addContactButtonHandler = (event) => {
-    event.preventDefault();
+  addContactButtonHandler = () => {
     this.props.addContact(this.state);
-    this.setState({
-      [event.target.name]: '',
-    });
     this.props.history.push('/dashboard');
   }
 
@@ -67,7 +63,7 @@ class AddContactContainer extends Component {
   render() {
     if (!this.props.isLoggedIn) return <Redirect to="/login" />
     return (
-      <AddContact
+      <FormikAddContactApp
         addContactInputHandler={this.addContactInputHandler}
         addContactButtonHandler={this.addContactButtonHandler}
         updateContactButtonHandler={this.updateContactButtonHandler}

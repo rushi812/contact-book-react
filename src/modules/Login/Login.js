@@ -1,4 +1,6 @@
 import React from 'react';
+import { withFormik, Form } from 'formik'
+import * as Yup from 'yup'
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -22,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#3f51b5',
   },
   form: {
     width: '100%',
@@ -33,8 +35,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Login({ loginInputHandler, loginButtonHandler, validate }) {
-  // console.log("validation", validate);
+function Login({
+  loginInputHandler,
+  values,
+  handleChange,
+  errors,
+  touched,
+}) {
   const classes = useStyles();
 
   return (
@@ -47,27 +54,31 @@ function Login({ loginInputHandler, loginButtonHandler, validate }) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate autoComplete="off">
+        <Form className={classes.form} noValidate autoComplete="off">
           <div>
             <TextField
               className={classes.textField}
-              onChange={loginInputHandler}
+              onChange={(e) => { handleChange(e); loginInputHandler(e) }}
+              value={values.email}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Email / Username"
-              name="username"
-              autoComplete="username"
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
               autoFocus
+              error={touched.email && Boolean(errors.email)}
+              helperText={errors.email ? errors.email : ''}
             />
 
           </div>
           <div>
             <TextField
               className={classes.textField}
-              onChange={loginInputHandler}
+              onChange={(e) => { handleChange(e); loginInputHandler(e) }}
+              value={values.password}
               variant="outlined"
               margin="normal"
               required
@@ -77,12 +88,13 @@ function Login({ loginInputHandler, loginButtonHandler, validate }) {
               type="password"
               id="password"
               autoComplete="current-password"
+              error={touched.password && Boolean(errors.password)}
+              helperText={errors.password ? errors.password : ''}
             />
           </div>
           <div>
             <Button
               type="submit"
-              onClick={loginButtonHandler}
               fullWidth
               variant="contained"
               color="primary"
@@ -97,10 +109,34 @@ function Login({ loginInputHandler, loginButtonHandler, validate }) {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </Form>
       </div >
     </Container>
   );
 }
 
-export default Login;
+const FormikLoginApp = withFormik({
+  mapPropsToValues({ password, email }) {
+    return {
+      email: email || '',
+      password: password || '',
+    }
+  },
+  validationSchema: Yup.object().shape({
+    email: Yup
+      .string()
+      .email('email is not valid')
+      .required('email is required'),
+    password: Yup
+      .string()
+      .required('password is required'),
+  }),
+  handleSubmit(values, { props, resetForm }) {
+    setTimeout(() => {
+      props.loginButtonHandler();
+      resetForm()
+    }, 0)
+  }
+})(Login)
+
+export default FormikLoginApp;

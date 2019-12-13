@@ -1,4 +1,7 @@
 import React from 'react';
+import { withFormik, Form } from 'formik'
+import * as Yup from 'yup'
+
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -43,14 +46,17 @@ const useStyles = makeStyles(theme => ({
 
 function AddContact({
   addContactInputHandler,
-  addContactButtonHandler,
   updateContactButtonHandler,
   contacts,
-  isEdit }) {
+  isEdit,
+  values,
+  handleChange,
+  errors,
+  touched,
+}) {
 
   const classes = useStyles();
 
-  console.log("is edit", isEdit);
   return (
     < React.Fragment >
       <CssBaseline />
@@ -65,87 +71,99 @@ function AddContact({
                 <Typography variant="h6" gutterBottom>Edit your contact details</Typography> :
                 <Typography variant="h6" gutterBottom>Add your contact details</Typography>
             }
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  type="text"
-                  value={contacts.firstname}
-                  onChange={addContactInputHandler}
-                  required
-                  id="firstname"
-                  name="firstname"
-                  label="First Name"
-                  fullWidth
-                  autoComplete="fname"
-                />
+            <Form className={classes.form} noValidate autoComplete="off">
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    type="text"
+                    onChange={(e) => { handleChange(e); addContactInputHandler(e) }}
+                    // value={values.firstname}
+                    value={contacts.firstname}
+                    required
+                    id="firstname"
+                    name="firstname"
+                    label="First Name"
+                    fullWidth
+                    autoComplete="fname"
+                    error={touched.firstname && Boolean(errors.firstname)}
+                    helperText={errors.firstname ? errors.firstname : ''}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    value={contacts.lastname}
+                    onChange={addContactInputHandler}
+                    id="lastname"
+                    name="lastname"
+                    label="Last Name"
+                    fullWidth
+                    autoComplete="lname"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    type="email"
+                    onChange={(e) => { handleChange(e); addContactInputHandler(e) }}
+                    // value={values.email}
+                    value={contacts.email}
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    autoComplete="email"
+                    error={touched.email && Boolean(errors.email)}
+                    helperText={errors.email ? errors.email : ''}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    type="number"
+                    onChange={(e) => { handleChange(e); addContactInputHandler(e) }}
+                    // value={values.phone}
+                    value={contacts.phone}
+                    required
+                    id="phone"
+                    name="phone"
+                    label="Phone"
+                    fullWidth
+                    autoComplete="phone"
+                    error={touched.phone && Boolean(errors.phone)}
+                    helperText={errors.phone ? errors.phone : ''}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={contacts.address}
+                    onChange={addContactInputHandler}
+                    id="address"
+                    name="address"
+                    label="Address"
+                    fullWidth
+                    autoComplete="address"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  value={contacts.lastname}
-                  onChange={addContactInputHandler}
-                  id="lastname"
-                  name="lastname"
-                  label="Last Name"
-                  fullWidth
-                  autoComplete="lname"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  value={contacts.email}
-                  onChange={addContactInputHandler}
-                  id="email"
-                  name="email"
-                  label="Email"
-                  fullWidth
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  value={contacts.phone}
-                  onChange={addContactInputHandler}
-                  required
-                  id="phone"
-                  name="phone"
-                  label="Phone"
-                  fullWidth
-                  autoComplete="phone"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={contacts.address}
-                  onChange={addContactInputHandler}
-                  id="address"
-                  name="address"
-                  label="Address"
-                  fullWidth
-                  autoComplete="address"
-                />
-              </Grid>
-            </Grid>
-            <div className={classes.buttons}>
-              {
-                isEdit ?
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    onClick={updateContactButtonHandler}
-                    className={classes.button}
-                  >Update
+              <div className={classes.buttons}>
+                {
+                  isEdit ?
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      onClick={updateContactButtonHandler}
+                      className={classes.button}
+                    >Update
                   </Button> :
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    onClick={addContactButtonHandler}
-                    className={classes.button}
-                  >Add
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                    >Add
                   </Button>
-              }
-            </div>
+                }
+              </div>
+            </Form>
           </React.Fragment>
         </Paper>
       </main>
@@ -153,4 +171,34 @@ function AddContact({
   );
 }
 
-export default AddContact;
+const FormikAddContactApp = withFormik({
+  mapPropsToValues({ firstname, phone, email }) {
+    return {
+      firstname: firstname || '',
+      phone: phone || '',
+      email: email || '',
+    }
+  },
+  validationSchema: Yup.object().shape({
+    firstname: Yup
+      .string()
+      .required('First name is required'),
+    phone: Yup
+      .number()
+      .positive()
+      .integer()
+      .required('Phone is required'),
+    email: Yup
+      .string()
+      .email('email is not valid')
+      .required('email is required'),
+  }),
+  handleSubmit(values, { props, resetForm }) {
+    setTimeout(() => {
+      props.addContactButtonHandler();
+      resetForm()
+    }, 0)
+  }
+})(AddContact)
+
+export default FormikAddContactApp;

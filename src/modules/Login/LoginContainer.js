@@ -8,13 +8,13 @@ import firebase from '../../firebase/firebase';
 import { authUser } from '../../redux/contactActions';
 
 
-import Login from './Login';
+import FormikLoginApp from './Login';
 
 const db = firebase.firestore();
 class LoginContainer extends Component {
 
   state = {
-    username: '',
+    email: '',
     password: '',
   }
 
@@ -24,10 +24,9 @@ class LoginContainer extends Component {
     });
   }
 
-  loginButtonHandler = (event) => {
-    event.preventDefault();
+  loginButtonHandler = () => {
     let query = db.collection('users');
-    query = query.where('username', '==', this.state.username)
+    query = query.where('email', '==', this.state.email)
     query.where('password', '==', this.state.password)
       .get()
       .then((querySnapshot) => {
@@ -45,10 +44,11 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <Login
+      <FormikLoginApp
         loginInputHandler={this.loginInputHandler}
-        loginButtonHandler={this.loginButtonHandler}
+        loginButtonHandler={(event) => this.loginButtonHandler(event)}
         isLoggedIn={this.props.isLoggedIn}
+        loggedInUser={this.state}
       />
     );
   }
